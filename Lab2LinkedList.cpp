@@ -18,6 +18,7 @@ public:
     void pop_back();
     void remove_every_n(int n);
     void sort();
+    List(const List& other);
     
 private:
 
@@ -208,30 +209,44 @@ void List<T>::sort()
     } while (flag);
 }
 
-//склеювання листів
+
+//конструктор копіювання листів
 template<typename T>
-List<T>* concatenate(List<T>** top, List<T>** top2) {
-    char temp;
-    temp = top2.pop_back();
-    List<T>* pv = head(temp);
-    while (*top2 != NULL) {
-        char temp2 = pop(top2);
-        push(&pv, temp2);
+List<T>::List(const List& other) {
+    if (!other.head) {
+        size = 0;
+        head = nullptr;
+        return;
     }
-    while (*top != NULL) {
-        char temp2 = pop(top);
-        push(&pv, temp2);
+
+    head = new Node<T>(*other.head);
+    Node<T>* cur = head;
+    size = 1;
+
+    for (Node<T>* t = other.head->pnext; t != nullptr; t = t->pnext) {
+        cur->pnext = new Node<T>(*t);
+        cur = cur->pnext;
+        ++size;
     }
-    return pv;
+    cur->pnext = nullptr;
 }
 
 //меню
 int menu() {
     cout << "Choose action from list : " << endl;
-
+    cout << "1. Remove first" << endl;
+    cout << "2. Add to the end" << endl;
+    cout << "3. Clear" << endl;
+    cout << "4. Get Size of List" << endl;
+    cout << "5. Add to the beginning" << endl;
+    cout << "6. Insert to position" << endl;
+    cout << "7. Remove element number " << endl;
+    cout << "8. Remove element from end of the List" << endl;
+    cout << "9. Remove every n element from the List" << endl;
+    cout << "10. Sort" << endl;
+    cout << "11. Concatenate two lists" << endl;
     int res;
     cin >> res;
-
     return res;
 }
 
@@ -239,16 +254,49 @@ int main()
 {
     List<int> lst;
     lst.push_back(4);
-    lst.push_back(9);
+    lst.push_back(99);
     lst.push_back(3);
-    lst.push_back(1);
-    lst.push_back(7);
+    lst.push_back(12);
+    lst.push_back(72);
     lst.push_back(4);
-    lst.push_back(9);
-    lst.sort();
+    lst.push_back(11);
+    List<int> lst3;
+    lst.push_back(99);
+    lst.push_back(15);
+    lst.push_back(11);
+    lst.push_back(99);
+    lst.push_back(12);
+    lst.push_back(72);
+    lst.push_back(30);
+
+    /*List<int> lst2(lst);
+    
+    List<int> res;
     for (int i = 0; i < lst.GetSize(); i++) {
-        cout << lst[i] << endl;
+        res.push_back(lst[i]);
     }
+    for (int j = 0; j < lst2.GetSize(); j++) {
+        res.push_back(lst2[j]);
+    }
+    for (int i = 0; i < res.GetSize(); i++) {
+        cout<<res[i]<<endl;
+    }*/
+
+    List<int> res;
+
+    for (int i = 0; i < lst.GetSize(); i++) {
+        for (int j = 0; j < lst3.GetSize(); j++) {
+            if (lst[i] == lst3[j]) {
+                
+                res.push_back(lst[i]);
+                
+            }
+        }
+    }
+    for (int i = 0; i < res.GetSize(); i++) {
+        cout << res[i] << endl;
+    }
+
 }
     
 
