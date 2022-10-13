@@ -18,7 +18,9 @@ public:
     void pop_back();
     void remove_every_n(int n);
     void sort();
+    
     List(const List& other);
+
     
 private:
 
@@ -231,6 +233,46 @@ List<T>::List(const List& other) {
     cur->pnext = nullptr;
 }
 
+//method for merging Lists
+template<typename T>
+List<T> Merge(List<T>lst1, List<T>lst2) {
+    List<T> res;
+    for (int i = 0; i < lst1.GetSize(); i++) {
+        for (int j = 0; j < lst2.GetSize(); j++) {
+            if (lst1[i] == lst2[j]) {
+
+                res.push_back(lst1[i]);
+                break;
+            }
+        }
+    }
+    return res;
+}
+
+
+//Concatenate Lists
+template<typename T>
+List<T> Concat(List<T>lst, List<T>lst2) {
+    List<T> res;
+    for (int i = 0; i < lst.GetSize(); i++) {
+        res.push_back(lst[i]);
+    }
+    for (int j = 0; j < lst2.GetSize(); j++) {
+        res.push_back(lst2[j]);
+    }
+    return res;
+}
+
+
+//Print
+template<typename T>
+void printList(List<T> lis) {
+    for (int i = 0; i < lis.GetSize(); i++) {
+        cout << lis[i] << " ";
+    }
+    cout << endl;
+}
+
 //меню
 int menu() {
     cout << "Choose action from list : " << endl;
@@ -244,7 +286,10 @@ int menu() {
     cout << "8. Remove element from end of the List" << endl;
     cout << "9. Remove every n element from the List" << endl;
     cout << "10. Sort" << endl;
-    cout << "11. Concatenate two lists" << endl;
+    cout << "11. Make a copy of list and print it" << endl;
+    cout << "12. Concatenate two lists" << endl;
+    cout << "13. Merge of two lists" << endl;
+    cout << "14. Print" << endl;
     int res;
     cin >> res;
     return res;
@@ -255,47 +300,310 @@ int main()
     List<int> lst;
     lst.push_back(4);
     lst.push_back(99);
-    lst.push_back(3);
-    lst.push_back(12);
-    lst.push_back(72);
-    lst.push_back(4);
-    lst.push_back(11);
-    List<int> lst3;
-    lst.push_back(99);
-    lst.push_back(15);
-    lst.push_back(11);
     lst.push_back(99);
     lst.push_back(12);
     lst.push_back(72);
     lst.push_back(30);
+    List<int> lst3;
+    lst3.push_back(99);
+    lst3.push_back(15);
+    lst3.push_back(11);
+    lst3.push_back(99);
+    lst3.push_back(12);
+    lst3.push_back(72);
+    lst3.push_back(30);
 
-    /*List<int> lst2(lst);
+    List<int> lst2(lst);
+    /*List<int> reik;*/
+    /*List<int> resau;*/
     
-    List<int> res;
-    for (int i = 0; i < lst.GetSize(); i++) {
-        res.push_back(lst[i]);
-    }
-    for (int j = 0; j < lst2.GetSize(); j++) {
-        res.push_back(lst2[j]);
-    }
-    for (int i = 0; i < res.GetSize(); i++) {
-        cout<<res[i]<<endl;
-    }*/
-
-    List<int> res;
-
-    for (int i = 0; i < lst.GetSize(); i++) {
-        for (int j = 0; j < lst3.GetSize(); j++) {
-            if (lst[i] == lst3[j]) {
-                
-                res.push_back(lst[i]);
-                
+    while (true) {
+        
+            
+        switch (menu()) {
+        case 1:
+        {
+            system("cls");
+            cout << "Choose list 1 or 2 :" << endl;
+            int numc1;
+            cin >> numc1;
+            if (numc1 == 1) {
+                lst.pop_front();
+            }
+            else if (numc1 == 2) {
+                lst3.pop_front();
+            }
+            else {
+                cout << "Wrong value " << endl;
             }
         }
+            break;
+        case 2:
+        {
+            system("cls");
+            cout << "Choose list 1 or 2 :" << endl;
+            int numc2;
+            cin >> numc2;
+            if (numc2 == 1) {
+                cout << "Write naumber to add " << endl;
+                int numa2;
+                cin >> numa2;
+                lst.push_back(numa2);
+            }
+            else if (numc2 == 2) {
+                cout << "Write naumber to add " << endl;
+                int numa2;
+                cin >> numa2;
+                lst3.push_back(numa2);
+            }
+            else {
+                cout << "Wrong value " << endl;
+            }
+        }
+            break;
+        case 3: 
+        {
+            system("cls");
+            cout << "Choose list 1 or 2 :" << endl;
+            int numc3;
+            cin >> numc3;
+            if (numc3 == 1) {
+                lst.clear();
+            }
+            else if (numc3 == 2) {
+                lst3.clear();
+            }
+            else {
+                cout << "Wrong value " << endl;
+            }
+        }
+            break;
+
+        case 4:
+        {
+            system("cls");
+            cout << "Choose list 1 or 2 :" << endl;
+            int numc4;
+            cin >> numc4;
+            if (numc4 == 1) {
+                cout << lst.GetSize() << endl;
+            }
+            else if (numc4 == 2) {
+                cout << lst3.GetSize() << endl;
+            }
+            else {
+                cout << "Wrong value " << endl;
+            }
+        }
+            break;
+        case 5: {
+            system("cls");
+            cout << "Choose list 1 or 2 :" << endl;
+            int numc5;
+            cin >> numc5;
+            if (numc5 == 1) {
+                cout << "Write naumber to add " << endl;
+                int numa5;
+                cin >> numa5;
+                lst.push_front(numa5);
+            }
+            else if (numc5 == 2) {
+                cout << "Write naumber to add " << endl;
+                int numa5;
+                cin >> numa5;
+                lst3.push_front(numa5);
+            }
+            else {
+                cout << "Wrong value " << endl;
+            }
+        }
+            break;
+        case 6:
+        {
+            system("cls");
+            cout << "Choose list 1 or 2 :" << endl;
+            int numc6;
+            cin >> numc6;
+            if (numc6 == 1) {
+                cout << "Write naumber to add " << endl;
+                int numa6;
+                cin >> numa6;
+                cout << "Write index to insert " << endl;
+                int numi6;
+                cin >> numi6;
+                lst.insert(numa6, numi6);
+            }
+            else if (numc6 == 2) {
+                cout << "Write naumber to add " << endl;
+                int numa6;
+                cin >> numa6;
+                cout << "Write index to insert " << endl;
+                int numi6;
+                cin >> numi6;
+                lst3.insert(numa6, numi6);
+            }
+            else {
+                cout << "Wrong value " << endl;
+            }
+        }
+            break;
+        case 7:
+        {
+            system("cls");
+            cout << "Choose list 1 or 2 :" << endl;
+            int numc7;
+            cin >> numc7;
+            if (numc7 == 1) {
+                cout << "Write index to delete " << endl;
+                int numi7;
+                cin >> numi7;
+                lst.remove_at(numi7);
+            }
+            else if (numc7 == 2) {
+                cout << "Write index to delete " << endl;
+                int numi7;
+                cin >> numi7;
+                lst3.remove_at(numi7);
+            }
+            else {
+                cout << "Wrong value " << endl;
+            }
+        }
+            break;
+        case 8: {
+            system("cls");
+            cout << "Choose list 1 or 2 :" << endl;
+            int numc8;
+            cin >> numc8;
+            if (numc8 == 1) {
+                lst.pop_back();
+            }
+            else if (numc8 == 2) {
+                lst3.pop_back();
+            }
+            else {
+                cout << "Wrong value " << endl;
+            }
+        }
+            break;
+        case 9:{
+            system("cls");
+            cout << "Choose list 1 or 2 :" << endl;
+            int numc9;
+            cin >> numc9;
+            if (numc9 == 1) {
+                cout << "Write n to delete every n element  " << endl;
+                int numd9;
+                cin >> numd9;
+                lst.remove_every_n(numd9);
+            }
+            else if (numc9 == 2) {
+                cout << "Write n to delete every n element  " << endl;
+                int numd9;
+                cin >> numd9;
+                lst3.remove_every_n(numd9);
+            }
+            else {
+                cout << "Wrong value " << endl;
+            }
+        }
+                break;
+            case 10:
+            {
+                system("cls");
+                cout << "Choose list 1 or 2 :" << endl;
+                int numc10;
+                cin >> numc10;
+                if (numc10 == 1) {
+                    lst.sort();
+                }
+                else if (numc10 == 2) {
+                    lst3.sort();
+                }
+                else {
+                    cout << "Wrong value " << endl;
+                }
+            }
+                break;
+            case 11:
+            {
+                system("cls");
+                cout << "Choose list 1 or 2 :" << endl;
+                int numc11;
+                cin >> numc11;
+                if (numc11 == 1) {
+                    List<int>newlst = List<int>(lst);
+                    cout << "Copy of list 1 " << endl;
+                    for (int i = 0; i < newlst.GetSize(); i++) {
+                        cout << newlst[i] << " ";
+                    }
+                    cout << endl;
+                }
+                else if (numc11 == 2) {
+                    List<int>newlst2 = List<int>(lst3);
+                    cout << "Copy of list 2 " << endl;
+                    for (int i = 0; i < newlst2.GetSize(); i++) {
+                        cout << newlst2[i] << " ";
+                    }
+                    cout << endl;
+                }
+                else {
+                    cout << "Wrong value " << endl;
+                }
+            }
+                break;
+            case 12:
+            {
+                List<int>resau = Concat(lst, lst3);
+                cout << "Cancatenated Lists in one" << endl;
+                for (int i = 0; i < resau.GetSize(); i++) {
+                    cout << resau[i] << " ";
+                }
+                cout << endl;
+            }
+            break;
+            case 13:
+            {
+                system("cls");
+                List<int>reik = Merge(lst, lst3);
+                cout << "Merged :" << endl;
+                for (int i = 0; i < reik.GetSize(); i++) {
+                    cout << reik[i] << " ";
+                }
+                cout << endl;
+            }
+                break;
+            
+            case 14:
+            {
+                system("cls");
+                cout << "Choose from lists 1 and 2 :" << endl;
+                int numc14;
+                cin >> numc14;
+                if (numc14 == 1) {
+                    printList(lst);
+                }
+                else if (numc14 == 2) {
+                    printList(lst3);
+                }
+                else {
+                    cout << "Wrong value" << endl;
+                }
+            }
+                break;
+            
+
+            
+
+            }
+        
+        
+        
+
     }
-    for (int i = 0; i < res.GetSize(); i++) {
-        cout << res[i] << endl;
-    }
+
+
+
 
 }
     
